@@ -1,0 +1,15 @@
+BEGIN:VCARD
+VERSION:3.0
+N:王;小明;;;
+FN:王小明
+ORG:ABC 科技股份有限公司
+TITLE:資深軟體工程師
+TEL;TYPE=CELL:0912-345-678
+TEL;TYPE=WORK:02-1234-5678
+EMAIL:xiaoming.wang@abc.com
+URL:https://github.com/xiaoming
+ADR;TYPE=WORK:;;台北市中山區中山北路二段100號;台北市;;106;台灣
+BDAY:1990-05-15
+NOTE:喜歡 Python 和 QR Code 設計
+PHOTO;VALUE=URI:https://i.imgur.com/abc123.jpg
+END:VCARD
