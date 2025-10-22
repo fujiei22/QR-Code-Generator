@@ -20,9 +20,9 @@ pip install qrcode[pil] pillow tqdm urllib3
 ### 檔案結構
 ```
 qr_code_generator.py    # 主程式
-├── vcf/                # 放 .vcf 檔案（選填）
+├── vcf/                # 放 .vcf 檔案
 │   └── example.vcf
-├── url/                # 放 urls.txt（選填）
+├── url/                # 放 urls.txt
 │   └── urls.txt
 ├── logo/               # 放 logo 圖片
 │   └── avalue.png      # 預設檔名，可改 LOGO_FILENAME
@@ -50,7 +50,7 @@ qr_code_generator.py    # 主程式
 
 3. **輸出**：
    - vcf_img/：如 `example_qr.png`
-   - url_img/：如 `google.com_qr.png`
+   - url_img/：如 `www.google.com_qr.png`
    - 如果重複，會覆蓋舊檔
 
 ## 自訂設定（修改程式內變數）
