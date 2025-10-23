@@ -255,7 +255,7 @@ def process_urls(txt_path, output_dir, logo_path):
             urls = [line.strip() for line in f if line.strip() and not line.strip().startswith("#")]
     except Exception as e:
         tqdm.write(f"錯誤: 讀取 {txt_path} 失敗：{e}")
-        log_error(f"URL TXT 讀取錯誤 {txt_path}: {e}")
+        log_error(f"urls.txt 讀取錯誤 {txt_path}: {e}")
         return 0
 
     if not urls:
