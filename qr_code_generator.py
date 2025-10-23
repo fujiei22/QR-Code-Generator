@@ -272,22 +272,10 @@ def process_urls(txt_path, output_dir, logo_path):
 
 
 def main():
-    """程式主流程：設定路徑、建立範本、處理 vcf 與 urls"""
+    # 程式主流程：設定路徑、處理 vcf 與 urls
     base_dir = os.path.dirname(os.path.abspath(__file__))
     logo_path = os.path.join(base_dir, "logo", LOGO_FILENAME)
     url_txt_path = os.path.join(base_dir, URL_TXT_FILE)
-
-    # 若 urls.txt 不存在，自動建立範本
-    os.makedirs(os.path.dirname(url_txt_path), exist_ok=True)
-    if not os.path.exists(url_txt_path):
-        template = """# 每行一個網址，以下為範例，正式填寫請將 "# " 移除
-# https://www.google.com
-# https://www.facebook.com
-# https://www.github.com
-"""
-        with open(url_txt_path, "w", encoding="utf-8") as f:
-            f.write(template.strip() + "\n")
-        tqdm.write(f"已建立範本：{URL_TXT_FILE}")
 
     total_success = 0
 
@@ -308,9 +296,9 @@ def main():
     total_success += url_success
 
     # 總結輸出
-    print(f"\n完成！總共成功 {total_success} 個 QR Code")
-    print(f"   - {VCF_OUTPUT}/   ← .vcf 轉出的圖")
-    print(f"   - {URL_OUTPUT}/   ← urls.txt 轉出的圖")
+    print(f"\n完成！成功輸出 {total_success} 個 QR Code")
+    print(f"   - {VCF_OUTPUT}/   ← .vcf QR Code")
+    print(f"   - {URL_OUTPUT}/   ← urls.txt QR Code")
 
     # 清除空的 error.log
     if os.path.exists('error.log') and os.path.getsize('error.log') > 0:
