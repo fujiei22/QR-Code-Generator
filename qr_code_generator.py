@@ -4,7 +4,7 @@ import logging  # 錯誤記錄
 from PIL import Image, ImageDraw  # 圖片處理與繪製（如貼 Logo）
 from urllib.parse import urlparse  # 解析 URL 取出網域
 from qrcode.image.styledpil import StyledPilImage  # 自訂 QR 圖片樣式
-from qrcode.image.styles.moduledrawers import RoundedModuleDrawer, CircleModuleDrawer  # 模組樣式繪製器
+from qrcode.image.styles.moduledrawers import RoundedModuleDrawer, CircleModuleDrawer  # module 樣式繪製器
 from qrcode.image.styles.colormasks import SolidFillColorMask  # 前景色與背景色遮罩
 from tqdm import tqdm  # 進度條
 
@@ -50,7 +50,6 @@ def url_to_filename(url):
     try:
         parsed = urlparse(url.strip())
         domain = parsed.netloc or parsed.path
-        # domain = domain.replace('www.', '').split('/')[0].split(':')[0]  # 原有過濾，已註解
         return domain or "url"
     except:
         return "url"
