@@ -11,7 +11,7 @@ from tqdm import tqdm  # 進度條
 # ===================== 全域設定 =====================
 
 TARGET_SIZE     = 1000  # 最終圖片尺寸（正方形，單位：像素）
-LOGO_RATIO      = 0.20  # Logo 佔 QR 碼比例（0.20 = 20%）
+LOGO_RATIO      = 0.175  # Logo 佔 QR 碼比例
 BORDER          = 4     # QR 碼邊框格數（標準為 4，確保掃描穩定）
 
 MAX_BOX_SIZE    = 25    # 單一模組最大尺寸（避免過大模糊）

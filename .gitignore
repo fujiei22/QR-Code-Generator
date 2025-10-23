@@ -5,5 +5,7 @@ test.py
 error.log
 
 # 產生的圖片
-vcf_img/
-url_img/
+/vcf_img/
+/url_img/
+
+.gitignore
