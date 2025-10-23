@@ -20,12 +20,12 @@ MIN_BOX_SIZE    = 8     # 單一模組最小尺寸（確保清晰可掃）
 USE_CIRCLE_FOR_LARGE = False  # 若為 True，模組大時使用圓形避免鋸齒
 CIRCLE_THRESHOLD     = 20     # 切換圓形模組的尺寸門檻
 
-FRONT_COLOR     = (0, 42, 101)  # QR 碼前景色（RGB，預設深藍）
-BACK_COLOR      = (255, 255, 255)  # QR 碼背景色（RGB，預設白色）
+FRONT_COLOR_HEX = "#002A65"  # QR 碼前景色（RGB，預設深藍）
+BACK_COLOR_HEX  = "#FFFFFF"  # QR 碼背景色（RGB，預設白色）
 RANDOM_COLOR    = False  # 若為 True，每張 QR 碼使用隨機前景色
 
 ADD_FRAME       = False  # 若為 True，圖片外圍加上邊框
-FRAME_COLOR     = (0, 64, 152)  # 邊框顏色
+FRAME_COLOR_HEX = "#002A65"  # 邊框顏色
 FRAME_WIDTH     = 20    # 邊框寬度（像素）
 
 OUTPUT_PNG      = True  # 是否輸出為 PNG 格式
@@ -38,6 +38,15 @@ VCF_OUTPUT      = "vcf_img"     # .vcf 轉出的 QR 碼儲存資料夾
 URL_OUTPUT      = "url_img"     # 網址轉出的 QR 碼儲存資料夾
 # ======================================================
 
+# HEX to RGB
+def hex_to_rgb(hex_str):
+    """HEX → RGB 轉換"""
+    hex_str = hex_str.lstrip('#')
+    return tuple(int(hex_str[i:i+2], 16) for i in (0, 2, 4))
+
+FRONT_COLOR = hex_to_rgb(FRONT_COLOR_HEX)
+BACK_COLOR  = hex_to_rgb(BACK_COLOR_HEX)
+FRAME_COLOR = hex_to_rgb(FRAME_COLOR_HEX)
 
 def random_front_color():
     # 產生隨機 RGB 前景色（僅在 RANDOM_COLOR 為 True 時使用）
@@ -86,7 +95,7 @@ def generate_qr_from_data(data, name_hint, output_dir, logo_path):
         # 建立 QR 碼物件
         qr = qrcode.QRCode(
             version=None,  # 自動選擇最適版本
-            error_correction=qrcode.constants.ERROR_CORRECT_L,  # 容錯率
+            error_correction=qrcode.constants.ERROR_CORRECT_M,  # 容錯率(L=7%, M=15%, Q=25%, H=30%)
             box_size=1,  # 暫時尺寸，後續調整
             border=BORDER,
         )
@@ -164,7 +173,7 @@ def generate_qr_from_data(data, name_hint, output_dir, logo_path):
             logo_target = int(final_size * LOGO_RATIO)
             logo = logo.resize((logo_target, logo_target), Image.Resampling.LANCZOS)
 
-            # Logo 加上圓角遮罩
+            # Logo 圓角遮罩
             # mask = Image.new("L", logo.size, 0)
             # draw = ImageDraw.Draw(mask)
             # draw.rounded_rectangle([(0, 0), logo.size], radius=int(logo_target * 0.1), fill=255)
