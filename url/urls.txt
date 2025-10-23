@@ -1,3 +1,4 @@
-https://www.google.com
-https://www.facebook.com
-https://www.github.com
+# 每行一個網址，以下為範例，正式填寫請將 "# " 移除
+# https://www.google.com
+# https://www.facebook.com
+# https://www.github.com

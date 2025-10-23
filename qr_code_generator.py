@@ -1,9 +1,9 @@
 import os  # 檔案路徑處理與資料夾建立
 import qrcode  # 產生 QR Code
-import logging  # 錯誤記錄至檔案
+import logging  # 錯誤記錄
 from PIL import Image, ImageDraw  # 圖片處理與繪製（如貼 Logo）
 from urllib.parse import urlparse  # 解析 URL 取出網域
-from qrcode.image.styledpil import StyledPilImage  # 自訂 QR 樣式 
+from qrcode.image.styledpil import StyledPilImage  # 自訂 QR 圖片樣式
 from qrcode.image.styles.moduledrawers import RoundedModuleDrawer, CircleModuleDrawer  # 模組樣式繪製器
 from qrcode.image.styles.colormasks import SolidFillColorMask  # 前景色與背景色遮罩
 from tqdm import tqdm  # 進度條
@@ -50,6 +50,7 @@ def url_to_filename(url):
     try:
         parsed = urlparse(url.strip())
         domain = parsed.netloc or parsed.path
+        # domain = domain.replace('www.', '').split('/')[0].split(':')[0]  # 原有過濾，已註解
         return domain or "url"
     except:
         return "url"
@@ -119,11 +120,33 @@ def generate_qr_from_data(data, name_hint, output_dir, logo_path):
             color_mask=SolidFillColorMask(back_color=BACK_COLOR, front_color=front_color)
         ).convert("RGB")
 
-        # 若 QR 碼小於目標尺寸，把 QR 碼貼到目標尺寸的空白畫布中央
+        # 計算實際 QR 碼尺寸（含邊框）
         actual_w = modules * box_size + 2 * BORDER * box_size
+
+        # 若小於目標尺寸，補白至中央
         if actual_w < TARGET_SIZE:
             canvas = Image.new("RGB", (TARGET_SIZE, TARGET_SIZE), BACK_COLOR)
             offset = ((TARGET_SIZE - actual_w) // 2, (TARGET_SIZE - actual_w) // 2)
+            canvas.paste(img, offset)
+            img = canvas
+
+        # 若圖片太大（含邊框），自動縮小至 TARGET_SIZE
+        final_w = img.width
+        if ADD_FRAME:
+            final_w += 2 * FRAME_WIDTH  # 加上邊框後的總寬度
+
+        if final_w > TARGET_SIZE:
+            # 顯示縮小警告訊息
+            tqdm.write(f"警告: {name_hint} 資料過大，已自動縮小至 {TARGET_SIZE}x{TARGET_SIZE}")
+            
+            # 計算縮放比例
+            scale = TARGET_SIZE / final_w
+            new_size = (int(img.width * scale), int(img.height * scale))
+            img = img.resize(new_size, Image.Resampling.LANCZOS)  # 縮放
+
+            # 縮小後再補白置中
+            canvas = Image.new("RGB", (TARGET_SIZE, TARGET_SIZE), BACK_COLOR)
+            offset = ((TARGET_SIZE - new_size[0]) // 2, (TARGET_SIZE - new_size[1]) // 2)
             canvas.paste(img, offset)
             img = canvas
 
@@ -253,11 +276,10 @@ def main():
     # 若 urls.txt 不存在，自動建立範本
     os.makedirs(os.path.dirname(url_txt_path), exist_ok=True)
     if not os.path.exists(url_txt_path):
-        template = """# 每行一個網址，支援 http:// 或 https://
-https://google.com
-https://facebook.com
-https://github.com
-# https://your-website.com
+        template = """# 每行一個網址，以下為範例，正式填寫請將 "# " 移除
+# https://www.google.com
+# https://www.facebook.com
+# https://www.github.com
 """
         with open(url_txt_path, "w", encoding="utf-8") as f:
             f.write(template.strip() + "\n")
