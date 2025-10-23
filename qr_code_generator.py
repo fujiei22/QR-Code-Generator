@@ -20,7 +20,7 @@ MIN_BOX_SIZE    = 8     # 單一模組最小尺寸（確保清晰可掃）
 USE_CIRCLE_FOR_LARGE = False  # 若為 True，模組大時使用圓形避免鋸齒
 CIRCLE_THRESHOLD     = 20     # 切換圓形模組的尺寸門檻
 
-FRONT_COLOR     = (0, 64, 152)  # QR 碼前景色（RGB，預設深藍）
+FRONT_COLOR     = (0, 42, 101)  # QR 碼前景色（RGB，預設深藍）
 BACK_COLOR      = (255, 255, 255)  # QR 碼背景色（RGB，預設白色）
 RANDOM_COLOR    = False  # 若為 True，每張 QR 碼使用隨機前景色
 
@@ -30,7 +30,7 @@ FRAME_WIDTH     = 20    # 邊框寬度（像素）
 
 OUTPUT_PNG      = True  # 是否輸出為 PNG 格式
 
-LOGO_FILENAME   = "avalue.png"  # Logo 檔案名稱（放在 logo/ 資料夾）
+LOGO_FILENAME   = "logo.png"  # Logo 檔案名稱（放在 logo/ 資料夾）
 
 VCF_FOLDER      = "vcf"         # 輸入 .vcf 檔案的資料夾
 URL_TXT_FILE    = "url/urls.txt"  # 網址清單檔案路徑
@@ -86,7 +86,7 @@ def generate_qr_from_data(data, name_hint, output_dir, logo_path):
         # 建立 QR 碼物件
         qr = qrcode.QRCode(
             version=None,  # 自動選擇最適版本
-            error_correction=qrcode.constants.ERROR_CORRECT_H,  # 最高錯誤修正
+            error_correction=qrcode.constants.ERROR_CORRECT_L,  # 容錯率
             box_size=1,  # 暫時尺寸，後續調整
             border=BORDER,
         )
@@ -164,11 +164,11 @@ def generate_qr_from_data(data, name_hint, output_dir, logo_path):
             logo_target = int(final_size * LOGO_RATIO)
             logo = logo.resize((logo_target, logo_target), Image.Resampling.LANCZOS)
 
-            # 為 Logo 加上圓角遮罩
-            mask = Image.new("L", logo.size, 0)
-            draw = ImageDraw.Draw(mask)
-            draw.rounded_rectangle([(0, 0), logo.size], radius=int(logo_target * 0.1), fill=255)
-            logo.putalpha(mask)
+            # Logo 加上圓角遮罩
+            # mask = Image.new("L", logo.size, 0)
+            # draw = ImageDraw.Draw(mask)
+            # draw.rounded_rectangle([(0, 0), logo.size], radius=int(logo_target * 0.1), fill=255)
+            # logo.putalpha(mask)
 
             # 將 Logo 置中貼上
             pos = ((final_size - logo_target) // 2, (final_size - logo_target) // 2)
