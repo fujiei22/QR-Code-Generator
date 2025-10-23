@@ -22,7 +22,6 @@ CIRCLE_THRESHOLD     = 20     # 切換圓形模組的尺寸門檻
 
 FRONT_COLOR_HEX = "#002A65"  # QR 碼前景色（RGB，預設深藍）
 BACK_COLOR_HEX  = "#FFFFFF"  # QR 碼背景色（RGB，預設白色）
-RANDOM_COLOR    = False  # 若為 True，每張 QR 碼使用隨機前景色
 
 ADD_FRAME       = False  # 若為 True，圖片外圍加上邊框
 FRAME_COLOR_HEX = "#002A65"  # 邊框顏色
@@ -116,16 +115,13 @@ def generate_qr_from_data(data, name_hint, output_dir, logo_path):
             module_drawer = RoundedModuleDrawer()  # 預設圓角方塊
             eye_drawer = RoundedModuleDrawer()
 
-        # 決定前景色
-        front_color = random_front_color() if RANDOM_COLOR else FRONT_COLOR
-
         # 產生樣式化 QR 圖片
         qr.box_size = box_size
         img = qr.make_image(
             image_factory=StyledPilImage,
             module_drawer=module_drawer,
             eye_drawer=eye_drawer,
-            color_mask=SolidFillColorMask(back_color=BACK_COLOR, front_color=front_color)
+            color_mask=SolidFillColorMask(back_color=BACK_COLOR, front_color=FRONT_COLOR)
         ).convert("RGB")
 
         # 計算實際 QR 碼尺寸（含邊框）

@@ -4,9 +4,9 @@ test.py
 # error log
 error.log
 
-# urls.txt file
-url/
+# urls.txt
+url/urls.txt
 
-# 產生的圖片
+# image file
 vcf_img/
 url_img/
