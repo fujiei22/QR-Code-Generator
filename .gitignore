@@ -4,11 +4,9 @@ test.py
 # error log
 error.log
 
-# urls/urls.example.txt only
-url/
-!url/urls.example.txt
+# urls.txt
+url/urls.txt
 
-# vcf/example.vcf only
 vcf/
 !vcf/example.vcf
 
