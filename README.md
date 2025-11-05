@@ -11,6 +11,11 @@
 - 批量處理，進度條顯示
 - 錯誤記錄到 `error.log`
 
+### venv
+```bash
+.\venv\Scripts\activate
+```
+
 ### 套件需求
 執行以下指令安裝：
 ```bash
