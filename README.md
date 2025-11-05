@@ -13,6 +13,7 @@
 
 ### venv
 ```bash
+python -m venv myenv
 .\venv\Scripts\activate
 ```
 
