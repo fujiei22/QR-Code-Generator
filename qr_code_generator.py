@@ -88,7 +88,7 @@ def generate_qr_from_data(data, name_hint, output_dir, logo_path):
         # 建立 QR 碼物件
         qr = qrcode.QRCode(
             version=None,  # 自動選擇最適版本
-            error_correction=qrcode.constants.ERROR_CORRECT_M,  # 容錯率(L=7%, M=15%, Q=25%, H=30%)
+            error_correction=qrcode.constants.ERROR_CORRECT_H,  # 容錯率(L=7%, M=15%, Q=25%, H=30%)
             box_size=1,  # 暫時尺寸，後續調整
             border=BORDER,
         )
