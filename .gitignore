@@ -11,6 +11,7 @@ vcf/
 !vcf/example.vcf
 
 # image file
+vcf_svg/
 vcf_img/
 url_img/
 

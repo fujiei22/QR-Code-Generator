@@ -14,7 +14,7 @@
 ### venv
 ```bash
 python -m venv myenv
-.\venv\Scripts\activate
+.\myenv\Scripts\activate
 ```
 
 ### 套件需求
